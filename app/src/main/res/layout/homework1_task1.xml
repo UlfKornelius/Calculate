@@ -11,6 +11,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Hello Galaxy!"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/purple_500"
         android:textSize="35sp"
         app:layout_conststrainBottom_toBottomOf="parent"
         app:layout_conststrainLeft_toLeftOf="parent"
@@ -22,6 +24,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/purple_700"
         android:text="Input person name" />
 
     <LinearLayout
