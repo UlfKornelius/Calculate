@@ -1,7 +1,12 @@
 package ru.bondarev.android1.calculate;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.SwitchCompat;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,12 +22,13 @@ public class MainActivity extends AppCompatActivity {
      * 3. * Создайте макет калькулятора для горизонтальной ориентации экрана и отображайте его в
      * ландшафтной ориентации.
      **/
-    public static final String MY_TAG = "Lifecycle";
-    public static final String KEY_FIST = MY_TAG + ".mFirst";
-    public static final String KEY_SECOND = MY_TAG + ".mSecond";
-    public static final String KEY_RESULT = MY_TAG + ".mResult";
-    public static final String KEY_OPERATION = MY_TAG + ".mOperation";
-    public static final String KEY_SCREEN_RESULT = MY_TAG + ".screenResult";
+    public static final String MY_TAG = "LifecycleCalculator";
+    public static final String MY_PREFERENCES = "nightModePreferences";
+    public static final String KEY_NIGHT_MODE = "nightMode";
+    private static final String KEY_SCREEN = "mScreenResult";
+    SharedPreferences sharedPreferences;
+    SwitchCompat changeTheme;
+
 
     private CalculatorModel calculator;
 
@@ -31,7 +37,27 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.homework3);
+        setContentView(R.layout.calculator_activity);
+
+        sharedPreferences = getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
+        changeTheme = findViewById(R.id.change_theme);
+
+        mScreenResult = findViewById(R.id.screenResult);
+
+
+        checkNightModeActivated();
+
+        changeTheme.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                saveNightModeState(true);
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                saveNightModeState(false);
+            }
+            recreate();
+        });
+
 
         int[] numberIds = new int[]{
                 R.id.button0,
@@ -65,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         };
 
 
-        mScreenResult = findViewById(R.id.screenResult);
+
 
         calculator = new CalculatorModel();
 
@@ -117,6 +143,21 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void saveNightModeState(boolean nightMode) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(KEY_NIGHT_MODE, nightMode).apply();
+    }
+
+    public void checkNightModeActivated() {
+        if (sharedPreferences.getBoolean(KEY_NIGHT_MODE, false)) {
+            changeTheme.setChecked(true);
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            changeTheme.setChecked(false);
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -151,6 +192,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         Log.e(MY_TAG, "onDestroy() ");
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle state) {
+        super.onSaveInstanceState(state);
+        state.putString(KEY_SCREEN, mScreenResult.getText().toString());
+
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle state) {
+        super.onRestoreInstanceState(state);
+        mScreenResult.setText(state.getString(KEY_SCREEN));
     }
 
 }

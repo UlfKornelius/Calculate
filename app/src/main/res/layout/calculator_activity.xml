@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:srcCompat="@drawable/fon_2"
+        android:scaleType="centerCrop"
+        android:src="@drawable/fon_2"
+        />
+ <LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+     <TextView
+         android:id="@+id/screenResult"
+         android:layout_width="match_parent"
+         android:layout_height="100dp"
+         android:layout_centerHorizontal="true"
+         android:layout_marginLeft="20dp"
+         android:layout_marginRight="20dp"
+         android:layout_marginTop="35dp"
+         android:background="@color/teal_200"
+         android:gravity="end"
+         android:padding="15dp"
+         android:scrollbars="horizontal|vertical"
+         android:text=" "
+         android:textColor="@color/black"
+         android:textSize="22sp"
+         android:textStyle="normal"/>
+
+     <androidx.appcompat.widget.SwitchCompat
+         android:id="@+id/change_theme"
+         android:layout_gravity="center"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:text="@string/theme_mode"
+         android:textSize="14sp" />
+
+     <TableLayout
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_gravity="center"
+         android:layout_columnSpan="4"
+         android:layout_marginTop="120dp"
+         style="@style/MyStyle">
+
+
+         <TableRow
+             android:gravity="center">
+
+             <com.google.android.material.button.MaterialButton
+                 android:id="@+id/buttonOff"
+                 android:backgroundTint="@color/purple_700"
+                 android:text="@string/buttonOff" />
+
+             <com.google.android.material.button.MaterialButton
+                 android:id="@+id/buttonOn"
+                 android:backgroundTint="@color/teal_700"
+                 android:text="@string/buttonOn" />
+
+             <com.google.android.material.button.MaterialButton
+                 android:id="@+id/buttonC"
+                 android:backgroundTint="@color/teal_700"
+                 android:text="@string/buttonC" />
+
+
+             <com.google.android.material.button.MaterialButton
+                 android:id="@+id/buttonDivision"
+                 android:backgroundTint="#615352"
+                 android:layout_weight="1"
+                 android:text="@string/buttonDivision" />
+
+         </TableRow>
+
+
+         <TableRow
+             android:gravity="center">
+
+             <com.google.android.material.button.MaterialButton
+                 android:id="@+id/button7"
+                 android:backgroundTint="@color/white"
+                 android:textColor="@color/black"
+                 android:text="@string/button7" />
+
+             <com.google.android.material.button.MaterialButton
+                 android:id="@+id/button8"
+                 android:backgroundTint="@color/white"
+                 android:textColor="@color/black"
+                 android:text="@string/button8" />
+
+             <com.google.android.material.button.MaterialButton
+                 android:id="@+id/button9"
+                 android:backgroundTint="@color/white"
+                 android:textColor="@color/black"
+                 android:text="@string/button9" />
+
+             <com.google.android.material.button.MaterialButton
+                 android:id="@+id/buttonMultiplication"
+                 android:backgroundTint="#615352"
+                 android:layout_weight="1"
+                 android:text="@string/buttonMultiplication" />
+
+         </TableRow>
+
+         <TableRow
+             android:gravity="center">
+
+             <com.google.android.material.button.MaterialButton
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:id="@+id/button4"
+                 android:backgroundTint="@color/white"
+                 android:textColor="@color/black"
+                 android:text="@string/button4" />
+
+             <com.google.android.material.button.MaterialButton
+                 android:id="@+id/button5"
+                 android:backgroundTint="@color/white"
+                 android:textColor="@color/black"
+                 android:text="@string/button5" />
+
+             <com.google.android.material.button.MaterialButton
+                 android:id="@+id/button6"
+                 android:backgroundTint="@color/white"
+                 android:textColor="@color/black"
+                 android:text="@string/button6" />
+
+             <com.google.android.material.button.MaterialButton
+                 android:id="@+id/buttonMinus"
+                 android:backgroundTint="#615352"
+                 android:layout_weight="1"
+                 android:text="@string/buttonMinus" />
+
+         </TableRow>
+
+         <TableRow
+             android:gravity="center">
+
+             <com.google.android.material.button.MaterialButton
+                 android:id="@+id/button1"
+                 android:backgroundTint="@color/white"
+                 android:textColor="@color/black"
+                 android:text="@string/button1" />
+
+             <com.google.android.material.button.MaterialButton
+                 android:id="@+id/button2"
+                 android:backgroundTint="@color/white"
+                 android:textColor="@color/black"
+                 android:text="@string/button2" />
+
+             <com.google.android.material.button.MaterialButton
+                 android:id="@+id/button3"
+                 android:backgroundTint="@color/white"
+                 android:textColor="@color/black"
+                 android:text="@string/button3" />
+
+             <com.google.android.material.button.MaterialButton
+                 android:id="@+id/buttonPlus"
+                 android:backgroundTint="#615352"
+                 android:layout_weight="1"
+                 android:text="@string/buttonPlus" />
+
+         </TableRow>
+
+
+         <TableRow
+             android:gravity="center">
+
+             <com.google.android.material.button.MaterialButton
+                 android:id="@+id/button0"
+                 android:backgroundTint="@color/white"
+                 android:textColor="@color/black"
+                 android:layout_weight="1"
+                 android:text="@string/button0" />
+
+             <com.google.android.material.button.MaterialButton
+                 android:id="@+id/buttonPt"
+                 android:backgroundTint="@color/white"
+                 android:textColor="@color/black"
+                 android:layout_weight="1"
+                 android:text="@string/buttonPt" />
+
+             <com.google.android.material.button.MaterialButton
+                 android:id="@+id/buttonResult"
+                 android:backgroundTint="#615352"
+                 android:layout_weight="2"
+                 android:text="@string/buttonResult" />
+
+         </TableRow>
+
+     </TableLayout>
+
+</LinearLayout>
+
+
+</FrameLayout>
