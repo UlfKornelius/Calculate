@@ -6,28 +6,20 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    /**
-     * 1. Напишите обработку каждой кнопки из макета калькулятора.
-     * 2. Создайте объект с данными и операциями калькулятора. Продумайте, каким образом будете
-     * хранить введённые пользователем данные.
-     * 3. * Создайте макет калькулятора для горизонтальной ориентации экрана и отображайте его в
-     * ландшафтной ориентации.
-     **/
-    public static final String MY_TAG = "LifecycleCalculator";
-    public static final String MY_PREFERENCES = "nightModePreferences";
-    public static final String KEY_NIGHT_MODE = "nightMode";
-    private static final String KEY_SCREEN = "mScreenResult";
+
     SharedPreferences sharedPreferences;
-    SwitchCompat changeTheme;
+    private Button settings;
 
 
     private CalculatorModel calculator;
@@ -39,24 +31,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.calculator_activity);
 
-        sharedPreferences = getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
-        changeTheme = findViewById(R.id.change_theme);
+        sharedPreferences = getSharedPreferences(Constants.MY_PREFERENCES, MODE_PRIVATE);
+
+        settings = findViewById(R.id.settings);
 
         mScreenResult = findViewById(R.id.screenResult);
 
 
+        settings.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+            startActivityForResult(intent, RESULT_OK);
+        });
+
         checkNightModeActivated();
 
-        changeTheme.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                saveNightModeState(true);
-            } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                saveNightModeState(false);
-            }
-            recreate();
-        });
+
 
 
         int[] numberIds = new int[]{
@@ -91,15 +80,13 @@ public class MainActivity extends AppCompatActivity {
         };
 
 
-
-
         calculator = new CalculatorModel();
 
         View.OnClickListener numberButtonClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    calculator.onNumPressed(view.getId());
-                    mScreenResult.setText(calculator.getText());
+                calculator.onNumPressed(view.getId());
+                mScreenResult.setText(calculator.getText());
             }
         };
 
@@ -118,8 +105,6 @@ public class MainActivity extends AppCompatActivity {
                 mScreenResult.setText(calculator.getText());
             }
         };
-
-
 
 
         for (int i = 0; i < numberIds.length; i++) {
@@ -143,68 +128,42 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void saveNightModeState(boolean nightMode) {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean(KEY_NIGHT_MODE, nightMode).apply();
-    }
-
     public void checkNightModeActivated() {
-        if (sharedPreferences.getBoolean(KEY_NIGHT_MODE, false)) {
-            changeTheme.setChecked(true);
+        if (sharedPreferences.getBoolean(Constants.KEY_NIGHT_MODE, false)) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         } else {
-            changeTheme.setChecked(false);
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        Log.e(MY_TAG, "onStart() ");
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Log.e(MY_TAG, "onRestart() ");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.e(MY_TAG, "onResume() ");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.e(MY_TAG, "onPause() ");
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.e(MY_TAG, "onStop() ");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.e(MY_TAG, "onDestroy() ");
-    }
-
-    @Override
     protected void onSaveInstanceState(Bundle state) {
         super.onSaveInstanceState(state);
-        state.putString(KEY_SCREEN, mScreenResult.getText().toString());
-
+        state.putString(Constants.KEY_SCREEN, mScreenResult.getText().toString());
+//        state.putString(KEY_EQUATION, calculator.getEquation());
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle state) {
         super.onRestoreInstanceState(state);
-        mScreenResult.setText(state.getString(KEY_SCREEN));
+        mScreenResult.setText(state.getString(Constants.KEY_SCREEN));
+//        calculator.setEquation(state.getString(KEY_EQUATION));
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode != RESULT_CANCELED) {
+            super.onActivityResult(requestCode, resultCode, data);
+        } else if (resultCode == RESULT_OK) {
+            saveNightModeState(data.getExtras().getBoolean(Constants.KEY_NIGHT_MODE));
+            recreate();
+        }
+    }
+
+    private void saveNightModeState(boolean nightMode) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(Constants.KEY_NIGHT_MODE, nightMode).apply();
     }
 
 }

@@ -4,6 +4,7 @@ public class CalculatorModel {
 
     private float firstArg;
     private float secondArg;
+
     private StringBuilder inputStr = new StringBuilder();
 
 
@@ -105,10 +106,6 @@ public class CalculatorModel {
 
     }
 
-
-
-
-
     public void onActionPressed(int actionId) {
         if (actionId == R.id.buttonResult && state == State.secondArgInput && inputStr.length() > 0 ) {
             secondArg = Float.parseFloat(inputStr.toString());
@@ -165,6 +162,14 @@ public class CalculatorModel {
                 return inputStr.toString();
         }
     }
+
+//    public String getEquation() {
+//        return inputStr.toString();
+//    }
+//
+//    public void setEquation(String equation) {
+//        inputStr.append(equation);
+//    }
 
     private char getOperationChar() {
         switch (actionSelected) {
